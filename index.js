@@ -16,6 +16,7 @@ const faqRoutes = require('./routes/faq')
 const seoRoutes = require('./routes/seo')
 const companyRoutes = require('./routes/company')
 const mercadopagoRoutes = require('./routes/mercadopago')
+const paypalRoutes = require('./routes/paypal')
 const whatsappRoutes = require('./routes/whatsapp')
 
 const cors = require('cors')
@@ -46,6 +47,7 @@ app.use('/faq', faqRoutes)
 app.use('/seo', seoRoutes)
 app.use('/empresa', companyRoutes)
 app.use('/mercadopago', mercadopagoRoutes)
+app.use('/paypal', paypalRoutes)
 app.use('/whatsapp', whatsappRoutes)
 
 
