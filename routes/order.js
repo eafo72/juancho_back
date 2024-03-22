@@ -52,6 +52,71 @@ app.get('/single/:id', async (req, res) => {
 
 })
 
+// Checar si hay stock suficiente para surtir el pedido
+app.post('/checkStock', async (req, res) => {
+	const { 
+		tipo_venta,
+        subtotal,
+        descuento,
+        iva,
+        total,
+        descripcion,
+        usuario,
+        correo,
+		entregar_a,
+        direccion_entrega,
+		costo_envio,
+        telefono,
+        estatus_pago,
+        estatus_envio,
+        vendedor,
+		forma_entrega,
+        forma_pago,
+        num_parcialidades,
+        parcialidades
+	} = req.body 
+
+	
+	try {
+
+		//primero revisamos si hay existencia de cada producto
+		for(let i=0; i < descripcion.length; i++){
+
+			//primer filtro si existe el codigo y hay stock pero sin considerar aun los apartados			
+			const ifAvailableOne = await Stock.find({ codigo: descripcion[i]['codigo'], stock: {$gte : descripcion[i]['cantidad'] } });
+			  
+			if (ifAvailableOne.length == 0) {
+				res.json({
+					disponible: false,
+					msg: "El producto " + descripcion[i]['codigo'] + " no tiene el stock necesario para este pedido",
+				})
+				return;
+			}
+
+			//aqui faltaria que recorriera todo el arreglo de productos ya que puede haber en varios almacenes
+			//segundo filtro calcular stock - apartado y ver si alcanza
+			const calculo = (ifAvailableOne[0].stock - ifAvailableOne[0].apartado) -  descripcion[i]['cantidad'];
+						  
+			if (calculo < 0) {
+				res.json({
+					disponible: false,
+					msg: "El producto " + descripcion[i]['codigo'] + " no tiene el stock necesario para este pedido",
+				})
+				return;
+			}
+		}
+
+		res.json({
+			disponible: true,
+			msg: "Stock suficiente",
+		})
+		
+	} catch (error) {
+		res.status(500).json({
+			msg: 'Hubo un error revisando los datos'+error,
+		})
+	}
+})
 
 // CREAR
 app.post('/crear', async (req, res) => {
