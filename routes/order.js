@@ -154,7 +154,8 @@ app.post('/crear', async (req, res) => {
 
 	try {
 
-
+		/*
+		//ya revisamos con el endpoint de arriba antes de mandar a cobrar
 		//primero revisamos si hay existencia de cada producto
 		for(let i=0; i < descripcion.length; i++){
 
@@ -181,6 +182,7 @@ app.post('/crear', async (req, res) => {
 			}
 		}
 
+		*/
 
 		const nuevoPedido = await Pedidos.create({
 			usuario,
