@@ -18,6 +18,7 @@ const companyRoutes = require('./routes/company')
 const mercadopagoRoutes = require('./routes/mercadopago')
 const paypalRoutes = require('./routes/paypal')
 const whatsappRoutes = require('./routes/whatsapp')
+const enviaRoutes = require('./routes/envios')
 
 const cors = require('cors')
 
@@ -49,6 +50,7 @@ app.use('/empresa', companyRoutes)
 app.use('/mercadopago', mercadopagoRoutes)
 app.use('/paypal', paypalRoutes)
 app.use('/whatsapp', whatsappRoutes)
+app.use('/envia', enviaRoutes)
 
 
 
